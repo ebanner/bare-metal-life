@@ -10,11 +10,15 @@ int refresh(void) { return OK; }
 int mvcur(int, int, int, int) { return OK; }
 int endwin(void) { return OK; }
 
-int mvaddch(int y, int x, const char ch) {
-  volatile unsigned short *vga = (volatile unsigned short *)0xB8000;
+volatile unsigned short *VGA = (volatile unsigned short *)0xB8000;
 
+int CURSOR = 0;
+
+
+int mvaddch(int y, int x, const char ch) {
   int offset = 80*y + x;
-  vga[offset] = 0x0F00 | ch; /* 0x0F00 is white on black */
+
+  VGA[offset] = 0x0F00 | ch; /* 0x0F00 is white on black */
 
   return OK;
 }
@@ -25,12 +29,8 @@ void initscr() {
          mvaddch(y, x, ' ');
 }
 
-int CURSOR = 0;
-
 int addch(const chtype ch) {
-  volatile unsigned short *vga = (volatile unsigned short *)0xB8000;
-
-  vga[CURSOR] = ch;
+  VGA[CURSOR] = ch;
 
   CURSOR += 1;
 
