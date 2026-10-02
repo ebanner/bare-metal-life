@@ -37,6 +37,8 @@ int addch(const chtype ch) {
   return OK;
 }
 
-// int addstr(const char *str) {
-//   while (*str != '\0')
-// }
+int addstr(const char *str) {
+  for ( ; *str != '\0'; str++) {
+    addch(0x0F00 | *str);
+  }
+}
