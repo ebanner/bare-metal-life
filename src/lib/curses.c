@@ -16,7 +16,7 @@ int CURSOR = 0;
 
 
 int mvaddch(int y, int x, const char ch) {
-  int offset = 80*y + x;
+  int offset = COLS*y + x;
 
   VGA[offset] = 0x0F00 | ch; /* 0x0F00 is white on black */
 
