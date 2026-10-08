@@ -30,23 +30,14 @@ int get_num_neighbors(char world[LINES][COLS], int i, int j) {
     return num_neighbors;
 }
 
-void init(void) {
-    initscr();
-
-    char world[LINES][COLS];
+void step(char world[LINES][COLS]) {
     char next[LINES][COLS];
 
     for (int i = 0; i < LINES; i++) {
         for (int j = 0; j < COLS; j++) {
-            world[i][j] = 0;
             next[i][j] = 0;
         }
     }
-
-    // init
-    world[0][0] = 0; world[0][1] = 1; world[0][2] = 1;
-    world[1][0] = 1; world[1][1] = 1; world[1][2] = 0;
-    world[2][0] = 0; world[2][1] = 1; world[2][2] = 0;
 
     // update
     for (int i = 0; i < LINES; i++) {
@@ -64,11 +55,34 @@ void init(void) {
         }
     }
 
-    // draw
-    for (int i = 0; i < LINES; i++) {
-        for (int j = 0; j < COLS; j++) {
-            mvaddch(i, j, next[i][j] == 1 ? '#' : '.');
-        }
+    // copy back
+    for (int i = 0; i < LINES; i++)
+        for (int j = 0; j < COLS; j++)
+            world[i][j] = next[i][j];
+}
+
+void init(void) {
+    initscr();
+
+    char world[LINES][COLS];
+    for (int i = 0; i < LINES; i++)
+        for (int j = 0; j < COLS; j++)
+            world[i][j] = 0;
+
+    // init
+    world[12][40] = 0; world[12][41] = 1; world[12][42] = 1;
+    world[13][40] = 1; world[13][41] = 1; world[13][42] = 0;
+    world[14][40] = 0; world[14][41] = 1; world[14][42] = 0;
+
+    for (int i = 0; i < 1000; i++) {
+        // draw
+        for (int i = 0; i < LINES; i++)
+            for (int j = 0; j < COLS; j++)
+                mvaddch(i, j, world[i][j] == 1 ? '#' : ' ');
+
+        step(world);
+
+        usleep(10000);
     }
 
     // addstr("Welcome to EDDIEOS.");  
