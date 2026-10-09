@@ -3,18 +3,29 @@
 
 #include <curses.h>
 
-int get(char world[LINES][COLS], int i, int j) {
+int idx(int i) {
+    // return (i < 0) ? LINES : (i == LINES) ? 0 : i;
+
     if (i < 0)
-        return 0;
+        return LINES-1;
     else if (i == LINES)
         return 0;
-    else if (j < 0)
-        return 0;
+    else
+        return i;
+}
+
+int jdx(int j) {
+    // return (j < 0) ? COLS : (j == COLS) ? 0 : j;
+
+    if (j < 0)
+        return COLS-1;
     else if (j == COLS)
         return 0;
     else
-        return world[i][j];
+        return j;
 }
+
+
 
 int get_num_neighbors(char world[LINES][COLS], int i, int j) {
     int num_neighbors = 0;
@@ -23,7 +34,7 @@ int get_num_neighbors(char world[LINES][COLS], int i, int j) {
             if (di == 0 && dj == 0)
                 continue;
 
-            num_neighbors += get(world, i+di, j+dj);
+            num_neighbors += world[idx(i+di)][jdx(j+dj)];
         }
     }
 
@@ -69,12 +80,17 @@ void init(void) {
         for (int j = 0; j < COLS; j++)
             world[i][j] = 0;
 
-    // init
+    // R-pentomino
     world[12][40] = 0; world[12][41] = 1; world[12][42] = 1;
     world[13][40] = 1; world[13][41] = 1; world[13][42] = 0;
     world[14][40] = 0; world[14][41] = 1; world[14][42] = 0;
 
-    for (int i = 0; i < 1000; i++) {
+    // // Glider
+    // world[12][40] = 0; world[12][41] = 1; world[12][42] = 0;
+    // world[13][40] = 0; world[13][41] = 0; world[13][42] = 1;
+    // world[14][40] = 1; world[14][41] = 1; world[14][42] = 1;
+
+    for (;;) {
         // draw
         for (int i = 0; i < LINES; i++)
             for (int j = 0; j < COLS; j++)
