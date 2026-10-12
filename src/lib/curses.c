@@ -42,3 +42,8 @@ int addstr(const char *str) {
     addch(0x0F00 | *str);
   }
 }
+
+int move(int y, int x) {
+  CURSOR = y*COLS + x;
+  return OK;
+}

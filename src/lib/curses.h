@@ -20,6 +20,8 @@ int mvaddch(int y, int x, const char ch);
 
 void initscr(void);
 
+int move(int y, int x);
+
 /* No-ops */
 
 int noecho(void);

@@ -98,6 +98,10 @@ void init(void) {
 
         step(world);
 
+        char title[] = "Conway's Game of Life";
+        move(LINES-1, COLS-sizeof(title));
+        addstr(title);
+
         usleep(10000);
     }
 
