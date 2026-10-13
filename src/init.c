@@ -100,7 +100,9 @@ void init(void) {
 
         char title[] = "Conway's Game of Life";
         move(LINES-1, COLS-sizeof(title));
+        attron(0);
         addstr(title);
+        attroff(0);
 
         usleep(10000);
     }

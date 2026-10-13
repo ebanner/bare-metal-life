@@ -22,6 +22,9 @@ void initscr(void);
 
 int move(int y, int x);
 
+int attron(int attrs);
+int attroff(int attrs);
+
 /* No-ops */
 
 int noecho(void);

@@ -14,11 +14,13 @@ volatile unsigned short *VGA = (volatile unsigned short *)0xB8000;
 
 int CURSOR = 0;
 
+short int COLOR = 0x0F00;
+
 
 int mvaddch(int y, int x, const char ch) {
   int offset = COLS*y + x;
 
-  VGA[offset] = 0x0F00 | ch; /* 0x0F00 is white on black */
+  VGA[offset] = COLOR | ch; /* 0x0F00 is white on black */
 
   return OK;
 }
@@ -39,11 +41,19 @@ int addch(const chtype ch) {
 
 int addstr(const char *str) {
   for ( ; *str != '\0'; str++) {
-    addch(0x0F00 | *str);
+    addch(COLOR | *str);
   }
 }
 
 int move(int y, int x) {
   CURSOR = y*COLS + x;
   return OK;
+}
+
+int attron(int attrs) {
+  COLOR = 0x0A00;
+}
+
+int attroff(int attrs) {
+  COLOR = 0x0F00; 
 }
