@@ -75,6 +75,14 @@ void step(char world[LINES][COLS]) {
 void init(void) {
     initscr();
 
+    char welcome[] = "WELCOME TO EDDIEOS.";
+    move(LINES/3, COLS/2-(sizeof(welcome)/2));
+    attron(1);
+    addstr(welcome);
+    attroff(0);
+
+    usleep(10000000);
+
     char world[LINES][COLS];
     for (int i = 0; i < LINES; i++)
         for (int j = 0; j < COLS; j++)

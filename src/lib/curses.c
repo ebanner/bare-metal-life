@@ -51,7 +51,10 @@ int move(int y, int x) {
 }
 
 int attron(int attrs) {
-  COLOR = 0x0A00;
+  if (attrs == 0)
+    COLOR = 0x0A00;
+  else if (attrs == 1)
+    COLOR = 0x0E00;
 }
 
 int attroff(int attrs) {
