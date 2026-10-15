@@ -77,7 +77,7 @@ void init(void) {
 
     char welcome[] = "WELCOME TO EDDIEOS.";
     move(LINES/3, COLS/2-(sizeof(welcome)/2));
-    attron(1);
+    attron(COLOR_YELLOW);
     addstr(welcome);
     attroff(0);
 
@@ -108,7 +108,7 @@ void init(void) {
 
         char title[] = "Conway's Game of Life";
         move(LINES-1, COLS-sizeof(title));
-        attron(0);
+        attron(COLOR_GREEN);
         addstr(title);
         attroff(0);
 

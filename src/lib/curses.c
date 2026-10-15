@@ -51,12 +51,14 @@ int move(int y, int x) {
 }
 
 int attron(int attrs) {
-  if (attrs == 0)
+  // FIXME: Accept real attrs
+  if (attrs == COLOR_GREEN)
     COLOR = 0x0A00;
-  else if (attrs == 1)
+  else if (attrs == COLOR_YELLOW)
     COLOR = 0x0E00;
 }
 
 int attroff(int attrs) {
+  // FIXME: Accept real attrs
   COLOR = 0x0F00; 
 }

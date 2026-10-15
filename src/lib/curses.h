@@ -12,6 +12,9 @@ typedef unsigned short chtype;
 #define TRUE 1
 #define FALSE 0
 
+#define COLOR_GREEN 0
+#define COLOR_YELLOW 1
+
 
 static WINDOW* stdscr;
 
