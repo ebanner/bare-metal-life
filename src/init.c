@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <stddef.h>
+#include <debug.h>
 
 #include <curses.h>
 
@@ -112,8 +113,8 @@ void init(void) {
         addstr(title);
         attroff(0);
 
+        dbg_puts("LOGLINE\n");
+
         usleep(10000);
     }
-
-    // addstr("Welcome to EDDIEOS.");  
 }

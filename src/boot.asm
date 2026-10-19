@@ -8,9 +8,9 @@ _start:
     ; Set up stack pointer
     mov esp, 0x7c00
 
-    ; Read in one sector of doomgeneric from disk
+    ; Read in N sectors from disk
     mov ah, 0x02   ; BIOS function for reading from disk
-    mov al, 50     ; Read 50 sector (512 byte chunk)
+    mov al, 50     ; Read 50 sectors (512 byte chunks)
     mov ch, 0      ; Cylinder number (which 3D ring)
     mov cl, 2      ; Sector number (which slice of the pie [ring])
     mov dh, 0      ; Head number (which level of the 3D ring [depth])
