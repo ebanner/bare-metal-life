@@ -5,14 +5,14 @@ debug: os.img
 		-display cocoa,zoom-to-fit=on \
 		os.img
 
-debug2: os.img
-	qemu-system-i386 \
-		-S \
-		-s \
-		-monitor stdio \
-		-vga std \
-		-display cocoa,zoom-to-fit=on \
-		os.img
+# debug2: os.img
+# 	qemu-system-i386 \
+# 		-S \
+# 		-s \
+# 		-monitor stdio \
+# 		-vga std \
+# 		-display cocoa,zoom-to-fit=on \
+# 		os.img
 
 run: os.img
 	qemu-system-i386 -s -monitor stdio os.img

@@ -73,6 +73,21 @@ void step(char world[LINES][COLS]) {
             world[i][j] = next[i][j];
 }
 
+static inline unsigned char inb(unsigned short port) {
+    unsigned char v;
+    __asm__ volatile ("inb %1, %0" : "=a"(v) : "Nd"(port));
+    return v;
+}
+
+unsigned int kbd_poll() {
+    unsigned char status = inb(0x64);
+    if (status & 0x01 == 0)
+        return 0;
+
+    unsigned char key = inb(0x60);
+    return key;
+}
+
 void init(void) {
     initscr();
 
@@ -113,8 +128,15 @@ void init(void) {
         addstr(title);
         attroff(0);
 
-        dbg_puts("LOGLINE\n");
-
         usleep(10000);
+
+        unsigned int result = kbd_poll();
+        if (result == 0)
+            continue;
+
+        if (result != 0x39)
+            continue;
+
+        dbg_puts("Space!\n");
     }
 }
