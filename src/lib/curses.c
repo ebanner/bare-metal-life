@@ -56,6 +56,12 @@ int attron(int attrs) {
     COLOR = 0x0A00;
   else if (attrs == COLOR_YELLOW)
     COLOR = 0x0E00;
+  else if (attrs == COLOR_RED)
+    COLOR = 0x0C00;
+  else if (attrs == COLOR_GREY)
+    COLOR = 0x0700;
+  else if (attrs == COLOR_BLACK_ON_WHITE)
+    COLOR = 0x7000;
 }
 
 int attroff(int attrs) {

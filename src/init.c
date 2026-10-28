@@ -26,8 +26,6 @@ int jdx(int j) {
         return j;
 }
 
-
-
 int get_num_neighbors(char world[LINES][COLS], int i, int j) {
     int num_neighbors = 0;
     for (int di = -1; di <= 1; di++) {
@@ -73,6 +71,34 @@ void step(char world[LINES][COLS]) {
             world[i][j] = next[i][j];
 }
 
+#define R_PENTOMINO 0
+#define GLIDER 1
+
+static const char R_PENTOMINO_NAME[] = "R-Pentomino";
+static const char GLIDER_NAME[] = "Glider";
+
+static int START_CONFIGURATION = R_PENTOMINO;
+
+void _init(char world[LINES][COLS]) {
+    for (int i = 0; i < LINES; i++)
+        for (int j = 0; j < COLS; j++)
+            world[i][j] = 0;
+
+    if (START_CONFIGURATION == R_PENTOMINO) {
+        world[12][40] = 0; world[12][41] = 1; world[12][42] = 0;
+        world[13][40] = 0; world[13][41] = 0; world[13][42] = 1;
+        world[14][40] = 1; world[14][41] = 1; world[14][42] = 1;
+
+        START_CONFIGURATION = GLIDER;
+    } else {
+        world[12][40] = 0; world[12][41] = 1; world[12][42] = 1;
+        world[13][40] = 1; world[13][41] = 1; world[13][42] = 0;
+        world[14][40] = 0; world[14][41] = 1; world[14][42] = 0;
+
+        START_CONFIGURATION = R_PENTOMINO;
+    }
+}
+
 static inline unsigned char inb(unsigned short port) {
     unsigned char v;
     __asm__ volatile ("inb %1, %0" : "=a"(v) : "Nd"(port));
@@ -97,17 +123,10 @@ void init(void) {
     addstr(welcome);
     attroff(0);
 
-    usleep(10000000);
+    usleep(5000000);
 
     char world[LINES][COLS];
-    for (int i = 0; i < LINES; i++)
-        for (int j = 0; j < COLS; j++)
-            world[i][j] = 0;
-
-    // R-pentomino
-    world[12][40] = 0; world[12][41] = 1; world[12][42] = 1;
-    world[13][40] = 1; world[13][41] = 1; world[13][42] = 0;
-    world[14][40] = 0; world[14][41] = 1; world[14][42] = 0;
+    _init(world);
 
     // // Glider
     // world[12][40] = 0; world[12][41] = 1; world[12][42] = 0;
@@ -128,6 +147,11 @@ void init(void) {
         addstr(title);
         attroff(0);
 
+        const char *start_configuration = (START_CONFIGURATION == R_PENTOMINO) ? R_PENTOMINO_NAME : GLIDER_NAME;
+        move(LINES-1, 1);
+        addstr(start_configuration);
+        attroff(0);
+
         usleep(10000);
 
         unsigned int result = kbd_poll();
@@ -137,6 +161,8 @@ void init(void) {
         if (result != 0x39)
             continue;
 
-        dbg_puts("Space!\n");
+        _init(world);
+
+        // dbg_puts("Space!\n");
     }
 }

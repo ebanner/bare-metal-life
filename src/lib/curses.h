@@ -14,6 +14,9 @@ typedef unsigned short chtype;
 
 #define COLOR_GREEN 0
 #define COLOR_YELLOW 1
+#define COLOR_RED 2
+#define COLOR_GREY 3
+#define COLOR_BLACK_ON_WHITE 4
 
 
 static WINDOW* stdscr;
